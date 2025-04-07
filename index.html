@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2196f3">
+    <title>Calculadora Balística</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Calculadora Balística</h1>
+            <p>Calcula la velocidad inicial de un proyectil</p>
+        </header>
+
+        <main class="calculator-container">
+            <div class="input-group">
+                <label for="distancia">Distancia horizontal (m):*</label>
+                <input type="number" id="distancia" placeholder="Ej. 100" step="0.1" min="0.1">
+            </div>
+
+            <div class="input-group">
+                <label for="caida">Caída vertical (m):*</label>
+                <input type="number" id="caida" placeholder="Ej. 0.28" step="0.01" min="0.01">
+            </div>
+
+            <div class="input-group-row">
+                <div class="input-group half">
+                    <label for="peso">Peso (grains):*</label>
+                    <input type="number" id="peso" placeholder="Ej. 33.5" step="0.1" min="1">
+                </div>
+                <div class="input-group half">
+                    <label for="coeficienteB">Coef. Balístico:*</label>
+                    <input type="number" id="coeficienteB" placeholder="Ej. 0.092" step="0.001" min="0.02" max="0.099">
+                </div>
+            </div>
+
+            <div class="input-group-row">
+                <div class="input-group half">
+                    <label for="calibre">Calibre:*</label>
+                    <input type="number" id="calibre" placeholder="Ej. 6.35" step="0.01" min="0.01">
+                </div>
+                <div class="input-group half">
+                    <label for="unidadCalibre">Unidad:</label>
+                    <select id="unidadCalibre">
+                        <option value="mm">mm</option>
+                        <option value="pulgadas">in</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group-row">
+                <div class="input-group half">
+                    <label for="temperatura">Temperatura (°C):</label>
+                    <input type="number" id="temperatura" value="15" step="0.1">
+                </div>
+                <div class="input-group half">
+                    <label for="altitud">Altitud (m):</label>
+                    <input type="number" id="altitud" value="0" step="1" min="0">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="unidadVelocidad">Unidad de velocidad:</label>
+                <select id="unidadVelocidad">
+                    <option value="fps">fps (pies por segundo)</option>
+                    <option value="m/s">m/s (metros por segundo)</option>
+                    <option value="km/h">km/h (kilómetros por hora)</option>
+                </select>
+            </div>
+
+            <button id="calcularBtn" class="btn-calcular">Calcular</button>
+
+            <div id="error" class="error-message"></div>
+
+            <div id="resultados" class="resultados">
+                <h3>Resultados:</h3>
+                <div class="resultados-content">
+                    <p><strong>Velocidad inicial:</strong> <span id="velocidad"></span> <span id="unidad"></span></p>
+                    <p><strong>Tiempo de vuelo:</strong> <span id="tiempo"></span> segundos</p>
+                    <p><strong>Energía:</strong> <span id="energia"></span> ft-lb (<span id="energiaJ"></span> J)</p>
+                    <p><strong>Calibre:</strong> <span id="calibreOutput"></span></p>
+                    <p><strong>Densidad seccional:</strong> <span id="densidad"></span> lb/in²</p>
+                    <p><strong>Coef. arrastre estimado:</strong> <span id="cd"></span></p>
+                    <p><strong>Densidad del aire:</strong> <span id="densidadAire"></span> kg/m³</p>
+                </div>
+                <div class="info-note">
+                    * Calibrado para dar aproximadamente 950 fps con los valores de referencia: distancia=100m, caída=0.28m
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>Esta calculadora utiliza ecuaciones balísticas que consideran la resistencia del aire, 
+            coeficiente balístico y peso del proyectil para aproximar la velocidad inicial.</p>
+            <p class="version">v1.0 - 2025</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Registro del Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then((reg) => console.log('Service worker registrado!', reg))
+                    .catch((err) => console.log('Error al registrar service worker', err));
+            });
+        }
+    </script>
+</body>
+</html>
